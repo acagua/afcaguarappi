@@ -43,7 +43,7 @@
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize",
 	    "chmod 777 bootstrap/cache",
-	    "chmod 777 storage”
+	    "chmod 777 storage"
         ]
     },
     "config": {
