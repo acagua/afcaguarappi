@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Andres Felipe Cagua</title>
+        <title>Punto 1</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -66,22 +66,49 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            <!--@if (Route::has('login'))
                 <div class="top-right links">
-                    <a href="{{ url('/login') }}">Login</a>
-                    <a href="{{ url('/register') }}">Register</a>
-                </div>
-            @endif-->
-            <div class="content">
-                <div class="title m-b-md">
-                    Andrés Cagua
-                </div>
-
-                <div class="links">
-                    <a href="{{ url('/punto1') }}">Punto 1</a>
+                    <a href="https://github.com/acagua/afcaguarappi" target="_blank">Repositorio</a>
+                    <a href="{{ url('/punto1') }}">Pruebas PENDIENTE</a>
                     <a href="{{ url('/punto2') }}">Punto 2</a>
                     <a href="{{ url('/punto3') }}">Punto 3</a>
                 </div>
+
+            <div class="content">
+                <div class="title m-b-md">
+                    Punto 1!
+                </div>
+{!! Form::open(array('route' => 'punto1_process', 'class' => 'form')) !!}
+
+<!--<div class="form-group">
+    {!! Form::label('Entrada') !!}
+    {!! Form::text('name', null, 
+        array('required', 
+              'class'=>'form-control', 
+              'placeholder'=>'Your name')) !!}
+</div>
+
+<div class="form-group">
+    {!! Form::label('Your E-mail Address') !!}
+    {!! Form::text('email', null, 
+        array('required', 
+              'class'=>'form-control', 
+              'placeholder'=>'Your e-mail address')) !!}
+</div>-->
+
+<div class="form-group">
+    <!--{!! Form::label('Entrada') !!}-->
+    {!! Form::textarea('message', null, 
+        array('required', 
+              'class'=>'form-control', 
+              'placeholder'=>'Entrada')) !!}
+</div>
+
+<div class="form-group">
+    {!! Form::submit('Enviar', 
+      array('class'=>'btn btn-primary')) !!}
+</div>
+{!! Form::close() !!}
+
             </div>
         </div>
     </body>
