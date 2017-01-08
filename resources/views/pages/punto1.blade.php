@@ -65,6 +65,7 @@
         </style>
     </head>
     <body>
+
         <div class="flex-center position-ref full-height">
                 <div class="top-right links">
                     <a href="https://github.com/acagua/afcaguarappi" target="_blank">Repositorio</a>
@@ -74,40 +75,47 @@
                 </div>
 
             <div class="content">
+
+
                 <div class="title m-b-md">
                     Punto 1!
+                    
                 </div>
-{!! Form::open(array('route' => 'punto1_process', 'class' => 'form')) !!}
 
-<!--<div class="form-group">
-    {!! Form::label('Entrada') !!}
-    {!! Form::text('name', null, 
-        array('required', 
-              'class'=>'form-control', 
-              'placeholder'=>'Your name')) !!}
-</div>
+                @if(Session::has('salida'))
+                    <div class="alert alert-info">
+                      {{Session::get('salida')}}
+                    </div>
+                @endif
 
-<div class="form-group">
-    {!! Form::label('Your E-mail Address') !!}
-    {!! Form::text('email', null, 
-        array('required', 
-              'class'=>'form-control', 
-              'placeholder'=>'Your e-mail address')) !!}
-</div>-->
+                <ul>
+                  @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                </ul>
+                {!! Form::open(array('route' => 'punto1_process', 'class' => 'form')) !!}
+                <div class="form-group">
+                    <!--{!! Form::label('Entrada') !!}-->
 
-<div class="form-group">
-    <!--{!! Form::label('Entrada') !!}-->
-    {!! Form::textarea('message', null, 
-        array('required', 
-              'class'=>'form-control', 
-              'placeholder'=>'Entrada')) !!}
-</div>
+                @if(Session::has('salida'))
+                    {!! Form::textarea('entrada', Session::get('salida'), 
+                        array('required', 
+                              'class'=>'form-control', 
+                              'placeholder'=>'Entrada')) !!}
+                @else
+                    {!! Form::textarea('entrada', null, 
+                        array('required', 
+                              'class'=>'form-control', 
+                              'placeholder'=>'Entrada')) !!}
+                @endif
+                    
+                </div>
 
-<div class="form-group">
-    {!! Form::submit('Enviar', 
-      array('class'=>'btn btn-primary')) !!}
-</div>
-{!! Form::close() !!}
+                <div class="form-group">
+                    {!! Form::submit('Enviar', 
+                      array('class'=>'btn btn-primary')) !!}
+                </div>
+                {!! Form::close() !!}
 
             </div>
         </div>
