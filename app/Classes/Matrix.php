@@ -5,23 +5,17 @@ class Matrix
 {	
 	public $dimensiones;
 	
-	public $ops;
-
-    public function Matrix($dimensiones,$ops)
+    public function Matrix($dimensiones)
     {
     	$this->dimensiones = $dimensiones;
-    	$this->ops = $ops;
+
 
     }
     public function getDimensiones()
     {
     	return $this->dimensiones;
     }
-    
-    public function getOps()
-    {
-    	return $this->ops;
-    }
+
 	
 	public function getQuery($x1, $y1, $z1, $x2, $y2, $z2)
     {
