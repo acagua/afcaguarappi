@@ -82,9 +82,9 @@
                     
                 </div>
 
-                @if(Session::has('salida'))
+                @if(Session::has('respuesta'))
                     <div class="alert alert-info">
-                      {{Session::get('salida')}}
+                      {{Session::get('respuesta')}}
                     </div>
                 @endif
 

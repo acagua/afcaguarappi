@@ -22,8 +22,8 @@ class punto1Controller extends Controller
 		$lineas = explode("\n", $entrada);
 
 		$testcases = trim($lineas[0]);
-
-		if(!is_numeric($testcases)||$testcases==0)
+		$resultado = "Respuesta: \n";
+		if(!is_numeric($testcases)||$testcases<=0||$testcases>50)
 		{
     		return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea 1: '.$testcases);
 		}
@@ -55,6 +55,10 @@ class punto1Controller extends Controller
 			$dimensiones = $testcaseData[0];
 			$ops = $testcaseData[1];
 
+			if($dimensiones>100||$dimensiones<1||$ops>1000||$ops<1)
+			{
+				return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($posTestcase+1).': '.$lineas[$posTestcase]);
+			}
 			/*CREACION DE MATRIZ 
 			    $matrix = new Matrix(0);
 		  		$dimensiones = $matrix->getDimensiones();
@@ -125,6 +129,6 @@ class punto1Controller extends Controller
 			$posTestcase = $lineaAct;
 		}
 
-    	return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Finaliza proceso');
+    	return \Redirect::route('punto1')->with(['salida'=>$entrada, 'respuesta' => $resultado]);
     }
 }
