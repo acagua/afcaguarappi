@@ -59,11 +59,14 @@ class punto1Controller extends Controller
 			{
 				return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($posTestcase+1).': '.$lineas[$posTestcase]);
 			}
-			/*CREACION DE MATRIZ 
-			    $matrix = new Matrix(0);
-		  		$dimensiones = $matrix->getDimensiones();
-		    	return $dimensiones;
-			*/
+
+			    
+			$matriz = new Matrix;
+			$matriz->createMatriz($dimensiones);
+			
+		  	/*$valorCelda = $matriz->getCell(1,1,1);
+		  	return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('matriz '.$valorCelda);
+		  	*/
 
 			$baseOps = $lineaAct;
 			
@@ -91,7 +94,18 @@ class punto1Controller extends Controller
 								$error = true;
 							}
 						}
-						//CONTINUA CON LA CONSULTA A LA MATRIZ
+						if(!$error)
+						{
+							$query = $matriz->getQuery($accion[1],$accion[2],$accion[3],$accion[4],$accion[5],$accion[6]);
+							if(!is_numeric($query))
+							{
+								return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($j+1).': '.$query);
+							}
+							else
+							{
+								$resultado.=$query."\n"; 
+							}
+						}
 					}
 					else
 					{
@@ -108,6 +122,15 @@ class punto1Controller extends Controller
 							{
 								$error = true;
 							}
+						}
+						if(!$error)
+						{
+							$update = $matriz->updateCelda($accion[1],$accion[2],$accion[3],$accion[4]);
+							if(!is_numeric($update))
+							{
+								return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($j+1).': '.$update);
+							}
+
 						}
 						//CONTINUA CON LA ACTUALIZACION DE LA MATRIZ
 					}
