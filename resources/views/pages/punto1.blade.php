@@ -62,6 +62,9 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            ul {
+              list-style-type: none;
+            }
         </style>
     </head>
     <body>
@@ -83,9 +86,11 @@
                 </div>
 
                 @if(Session::has('respuesta'))
-                    <div class="alert alert-info">
-                      {{Session::get('respuesta')}}
-                    </div>
+                    <ul>
+                    @foreach(Session::get('respuesta') as $resp)
+                        <li>{{ $resp }}</li>
+                    @endforeach
+                    </ul>
                 @endif
 
                 <ul>

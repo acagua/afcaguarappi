@@ -50,11 +50,11 @@ class Matrix
     	}
     	if($x1>$dimensiones||$x2>$dimensiones||$y1>$dimensiones||$y2>$dimensiones||$z1>$dimensiones||$z2>$dimensiones)
     	{
-    		return 'Los valores no pueden ser superiores a las dimensiones';	
+    		return 'Los rangos no pueden ser superiores a las dimensiones';	
     	}
     	if($x1<1||$x2<1||$y1<1||$y2<1||$z1<1||$z2<1)
     	{
-    		return 'Los valores no pueden ser inferiores a 1';	
+    		return 'Los rangos no pueden ser inferiores a 1';	
     	}
 
     	$total = 0;
@@ -78,11 +78,11 @@ class Matrix
     	$dimensiones = $this->getDimensiones();
     	if($x<1||$y<1||$z<1)
     	{
-    		return 'Los valores no pueden ser inferiores a 1';
+    		return 'Los indices de la celda no pueden ser inferiores a 1';
     	}
     	if($x>$dimensiones||$y>$dimensiones||$z>$dimensiones)
     	{
-    		return 'Los valores no pueden ser superiores a las dimensiones';
+    		return 'Los indices de la celda no pueden ser superiores a las dimensiones';
     	}
     	if($valor>pow(10,9))
     	{
