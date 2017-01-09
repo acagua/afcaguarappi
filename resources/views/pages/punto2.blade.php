@@ -22,7 +22,7 @@
             }
 
             .full-height {
-                height: 100vh;
+                height: 30vh;
             }
 
             .flex-center {
@@ -62,20 +62,46 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            ol {
+                margin-left: 5%;
+                margin-right: 5%;
+                text-align: left;
+            }
+            p, ul{
+                margin-left: 5%;
+                margin-right: 5%;
+                text-align: justify;
+            }
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
                 <div class="top-right links">
-                    <a href="{{ url('/punto1') }}">Punto 1</a>
-                    <a href="{{ url('/punto3') }}">Punto 3</a>
+                    <a href="{{ url('/punto1') }}">CODING CHALLENGE</a>
+                    <a href="{{ url('/punto3') }}">PREGUNTAS</a>
                 </div>
 
             <div class="content">
                 <div class="title m-b-md">
-                    Punto 2!
+                    <br>Code Refactoring
                 </div>
             </div>
         </div>
+                <ol>
+                    <li> Las malas prácticas de programación que en su criterio son evidenciadas en el código. </li>
+                        <p>Las malas prácticas indentificadas son: </p>
+                        <ul>
+                            <li> Mala practica 1 </li>
+                        </ul>
+                        <br>
+                    <li> Cómo su refactorización supera las malas prácticas de programación. </li>
+
+                    <p>La refactorización soluciona las malas prácticas de este modo:</p>
+                    <ul>
+                        <li> Solución 1 </li>
+                    </ul>
+
+                </ol>
     </body>
 </html>

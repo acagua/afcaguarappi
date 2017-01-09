@@ -1,10 +1,20 @@
 <?php 
 namespace App\Classes;
  
+
 class Matrix
 {	
-	public $matriz;
-	public $dimensiones;
+
+	private $matriz;
+
+	private $dimensiones;
+
+    /**
+     * Crea la matriz inicializada con valor cero en todas sus celdas
+     *
+     * @param ($dimensiones) Las dimensiones que tendrá la matriz en sus 3 ejes
+     * @return array
+     */
     function createMatriz($dimensiones)
     {
     	$this->dimensiones = $dimensiones;
@@ -23,24 +33,50 @@ class Matrix
     	return $matriz;
     }
 
-
+    /**
+     * Devuelve la matriz en su estado actual
+     *
+     * @return array
+     */
     public function getMatriz()
     {
     	return $this->matriz;
     }
 
+    /**
+     * Devuelve el valor de la celda dada por sus coordenadas
+     *
+     * @param ($x) coordenada en el eje x de la matriz
+     * @param ($y) coordenada en el eje y de la matriz
+     * @param ($z) coordenada en el eje z de la matriz
+     * @return int
+     */
     public function getCell($x,$y,$z)
     {
     	return $this->matriz[$x][$y][$z];
     }
 
-
+    /**
+     * Devuelve el valor que define las dimensiones de la matriz
+     *
+     * @return int
+     */
     public function getDimensiones()
     {
     	return $this->dimensiones;
     }
 
-	
+    /**
+     * Devuelve la suma de las celdas comprometidas en el rango en cada eje dado por lo parámetros
+     *
+     * @param ($x1) coordenada inferior del rango para el eje x de la matriz
+     * @param ($y1) coordenada inferior del rango para el eje y de la matriz
+     * @param ($z1) coordenada inferior del rango para el eje z de la matriz
+     * @param ($x2) coordenada superior del rango para el eje x de la matriz
+     * @param ($y2) coordenada superior del rango para el eje y de la matriz
+     * @param ($z2) coordenada superior del rango para el eje z de la matriz
+     * @return int
+     */
 	public function getQuery($x1, $y1, $z1, $x2, $y2, $z2)
     {
     	$dimensiones = $this->getDimensiones();
@@ -73,6 +109,15 @@ class Matrix
     	return $total;
     }
 	
+    /**
+     * Actualiza el valor de la celda dada por sus coordenadas
+     *
+     * @param ($x) coordenada en el eje x de la matriz
+     * @param ($y) coordenada en el eje y de la matriz
+     * @param ($z) coordenada en el eje z de la matriz
+     * @param ($valor) Nuevo valor para de la celda
+     * @return int
+     */
 	public function updateCelda($x, $y, $z, $valor)
     {
     	$dimensiones = $this->getDimensiones();

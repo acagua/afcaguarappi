@@ -15,12 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('punto1', 'punto1Controller@index');
 Route::get('punto1', 
   ['as' => 'punto1', 'uses' => 'punto1Controller@index']);
 
 Route::post('punto1', 
   ['as' => 'punto1_process', 'uses' => 'punto1Controller@process']);
+
+Route::get('punto1/respuestas', function () {
+    return view('pages.respuestas1');
+});
 
 Route::get('punto2', function () {
     return view('pages.punto2');

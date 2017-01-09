@@ -22,7 +22,7 @@
             }
 
             .full-height {
-                height: 50vh;
+                height: 30vh;
             }
 
             .flex-center {
@@ -43,11 +43,6 @@
 
             .content {
                 text-align: center;
-            }
-            .content2 {
-                text-align: center;
-                margin-top:-0%;
-                 -webkit-text-stroke-width: 1px;
             }
 
             .title {
@@ -70,6 +65,17 @@
             ul {
               list-style-type: none;
             }
+
+            ol {
+                margin-left: 5%;
+                margin-right: 5%;
+                text-align: left;
+            }
+            p{
+                margin-left: 5%;
+                margin-right: 5%;
+                text-align: justify;
+            }
         </style>
     </head>
     <body>
@@ -77,59 +83,28 @@
         <div class="flex-center position-ref full-height">
                 <div class="top-right links">
                     <a href="https://github.com/acagua/afcaguarappi" target="_blank">Repositorio</a>
-                    <a href="{{ url('/punto1/respuestas') }}">Descripcion solucion</a>
+                    <a href="{{ url('/punto1') }}">CODING CHALLENGE</a>
                     |
                     <a href="{{ url('/punto2') }}">CODE REFACTORING</a>
                     <a href="{{ url('/punto3') }}">PREGUNTAS</a>
                 </div>
 
             <div class="content">
-
                 <div class="title m-b-md">
-                    <br>
-                    Coding Challenge
+                    <br>Solución
                 </div>
-                <ul>
-                  @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                  @endforeach
-                </ul>
-                {!! Form::open(array('route' => 'punto1_process', 'class' => 'form')) !!}
-                <div class="form-group">
-                    <!--{!! Form::label('Entrada') !!}-->
-
-                @if(Session::has('salida'))
-                    {!! Form::textarea('entrada', Session::get('salida'), 
-                        array('required', 
-                              'class'=>'form-control', 
-                              'placeholder'=>'Entrada')) !!}
-                @else
-                    {!! Form::textarea('entrada', null, 
-                        array('required', 
-                              'class'=>'form-control', 
-                              'placeholder'=>'Entrada')) !!}
-                @endif
-                    
-                </div>
-
-                <div class="form-group">
-                    {!! Form::submit('Enviar', 
-                      array('class'=>'btn btn-primary')) !!}
-                </div>
-                {!! Form::close() !!}
-
             </div>
+        </div>
+                <ol>
+                    <li>Las capas de la aplicación (por ejemplo capa de persistencia, vista, de aplicación, etc) y qué clases pertenecen 
+                a cual.</li>
+                    <li>La responsabilidad de cada clase creada.</li>
 
-                
-        </div>
-        <div class ="content2">
-                @if(Session::has('respuesta'))
-                    <ul>
-                    @foreach(Session::get('respuesta') as $resp)
-                        <li style="margin-left:-2%">{{ $resp }}</li>
-                    @endforeach
-                    </ul>
-                @endif
-        </div>
+                    <p>A partir del Framework Laravel, la aplicación se separó básicamente en vistas y controladores. Se adicionó una clase externa para separar lo que respecta a las funciones de la matriz. </p>
+                    <p>Dentro de las vistas, para esta prueba (no solo el primer punto) se crearon las páginas con las que interactúa el usuario para cada uno de los puntos (punto1.blade.php, punto2.blade.php, punto3.blade.php y respuestas1.blade.php) </p>
+                    <p>Por el lado de los controladores, dado que solo se requirió para el primer punto, se creo un controlador (punto1Controller.php) que se encarga de desplegar la vista inicial al usuario, recibir y procesar la entrada del mismo y desplegar el resultado y otro adicional (Punto1FormRequest.php) que valida el formulario del usuario. </p>
+                    <p>Por último, la clase externa creada (Matrix.php) es una clase cuya función es hacer los procesos que respectan a la matriz, es decir la creación de la matriz, la actualización de celdas y la suma de los valores dentro de un rango. </p>
+
+                </ol>
     </body>
 </html>

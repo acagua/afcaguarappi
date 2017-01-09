@@ -8,28 +8,42 @@ use App\Classes\Matrix;
 
 class punto1Controller extends Controller
 {
-    //
+    /**
+     * Muestra la página inicial del punto 1 donde se ingresa la entrada
+     *
+     * @return view
+     */
     public function index()
     {
     	return view('pages.punto1');
     }
 
+    /**
+     * Procesa la entrada del usuario y despliega el resultado
+     *
+     * @param ($request) Tiene la información del formulario enviado por el usuario
+     * @return view
+     */
     public function process(Punto1FormRequest $request)
     {
     	$entrada = $request->get('entrada');
 
-
 		$lineas = explode("\n", $entrada);
 
 		$testcases = trim($lineas[0]);
+
 		$resultado = "Respuesta: \n";
+
+		//validaciónes sobre la primera línea de la entrada
 		if(!is_numeric($testcases)||$testcases<=0||$testcases>50)
 		{
     		return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea 1: Debe ser un valor entre 1 y 50');
 		}
-	
+		
+		//Posicion de la linea de inicio del testcase
 		$posTestcase = 1;
 
+		//Línea actual de la entrada
 		$lineaAct = 1;
 
 		for($i=0;$i<$testcases;$i++)
@@ -43,14 +57,19 @@ class punto1Controller extends Controller
 			
 			$testcaseData = explode(" ",trim($lineas[$posTestcase]));
 
+			//Validación de los parámetros iniciales del testcase (tipo de dato)
 			if(count($testcaseData)!=2||!is_numeric($testcaseData[0])||!is_numeric($testcaseData[1]))
 			{
 				return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($posTestcase+1).': Deben ser dos valores numéricos');
 			}
 
+			//dimensiones de la matriz
 			$dimensiones = $testcaseData[0];
+
+			//número de operaciones del testcase actual
 			$ops = $testcaseData[1];
 
+			// Validaciones de los parámetros iniciales del testcase (valor de las dimensiones y número de operaciones)
 			if($dimensiones>100||$dimensiones<1)
 			{
 				return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($posTestcase+1).': El valor del tamaño debe estar entre 1 y 100');
@@ -60,10 +79,11 @@ class punto1Controller extends Controller
 				return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($posTestcase+1).': El número de operaciones debe estar entre 1 y 1000');
 			}
 
-			    
+			//Creación de la matriz en 0 con las dimensiones de entrada
 			$matriz = new Matrix;
 			$matriz->createMatriz($dimensiones);
 
+			//Posición de inicio de las operaciones del testcase
 			$baseOps = $lineaAct;
 			
 			if($ops+$baseOps>count($lineas))
@@ -77,6 +97,7 @@ class punto1Controller extends Controller
 
 				$accion = explode(" ",trim($lineas[$j]));
 
+				//Validación del tipo de Operación
 				if($accion[0]=="QUERY")
 				{
 					if(count($accion)==7)
