@@ -54,11 +54,11 @@ class Punto1ControllerTest extends TestCase
     }
 
      /**
-     * Validar error si no hay casos que probar cuando el número de testcases es válido
+     * Validar el error si no hay casos que probar cuando el número de testcases es válido
      *
      * @return void
      */
-    public function testTestcases3()
+    public function testTestcasesValido()
     {
     	$this->visit('/punto1')
     	->type('1', 'entrada')
@@ -68,7 +68,7 @@ class Punto1ControllerTest extends TestCase
     }
 
 	/**
-     * Validar si los parámetros del testcase son válidos
+     * Validar si los parámetros del testcase son válidos y coinciden
      *
      * @return void
      */
@@ -79,19 +79,142 @@ class Punto1ControllerTest extends TestCase
     	->press('Enviar')
     	->seePageIs('/punto1')
     	->see('Error en línea 2: Deben ser dos valores numéricos');
-    }
 
-	/**
-     * Validar si el número de operaciones coincide con el ingresado
-     *
-     * @return void
-     */
-    public function testOperaciones()
-    {
     	$this->visit('/punto1')
     	->type("1 \n 2 3", 'entrada')
     	->press('Enviar')
     	->seePageIs('/punto1')
     	->see('Error en línea 2: Número de operaciones no coincide');
     }
+
+	/**
+     * Validar la estructura de las operaciones
+     *
+     * @return void
+     */
+    public function testOperaciones()
+    {
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n vacio", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: Debe iniciar con "QUERY" o "UPDATE"');
+
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n QUERY", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: Se esperan 6 valores numéricos despues de "QUERY"');
+
+		$this->visit('/punto1')
+    	->type("1 \n 2 1\n QUERY 1 1 1 1 1 1 1", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: Se esperan 6 valores numéricos despues de "QUERY"');
+
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n UPDATE", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: Se esperan 4 valores numéricos despues de "UPDATE"');
+    	
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n UPDATE 1 1 1 1 1", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: Se esperan 4 valores numéricos despues de "UPDATE"');
+    }
+
+    /**
+     * Validar los parámetros para la función QUERY
+     *
+     * @return void
+     */
+    public function testQuery()
+    {
+
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n QUERY 1 1 a 1 1 1", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: Valor del parámetro 4 debe ser numérico');
+
+		$this->visit('/punto1')
+    	->type("1 \n 2 1\n QUERY 3 1 1 1 1 1", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: El limite inferior no puede ser mayor al superior');
+
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n QUERY 1 3 1 1 3 1", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: Los rangos no pueden ser superiores a las dimensiones');
+
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n QUERY 1 1 0 1 1 1", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: Los rangos no pueden ser inferiores a 1');
+    }
+
+    /**
+     * Validar los parámetros para la función UPDATE
+     *
+     * @return void
+     */
+    public function testUpdate()
+    {
+
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n UPDATE 1 1 a 1", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: Valor del parámetro 4 debe ser numérico');
+
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n UPDATE 3 1 1 1", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: Los indices de la celda no pueden ser superiores a las dimensiones');
+
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n UPDATE 1 0 1 1", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Error en línea 3: Los indices de la celda no pueden ser inferiores a 1');
+
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n UPDATE 1 1 1 1000000001", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('El nuevo valor debe ser mayor a -10^9 y menor a 10^9');
+
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n UPDATE 1 1 1 -1000000001", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('El nuevo valor debe ser mayor a -10^9 y menor a 10^9');
+    }
+
+	/**
+     * Validar entradas válidas
+     *
+     * @return void
+     */
+    public function testEntradaValida()
+    {
+    	$this->visit('/punto1')
+    	->type("1 \n 2 1\n UPDATE 1 1 1 8", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('Respuesta:');
+
+    	$this->visit('/punto1')
+    	->type("1 \n 2 3\n UPDATE 1 1 1 8 \n UPDATE 2 2 2 8 \n QUERY 1 1 1 2 2 2", 'entrada')
+    	->press('Enviar')
+    	->seePageIs('/punto1')
+    	->see('16');
+    }
+
 }

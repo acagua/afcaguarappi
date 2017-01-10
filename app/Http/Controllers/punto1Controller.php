@@ -156,7 +156,7 @@ class punto1Controller extends Controller
 					{
 						if(!is_numeric($accion[$k]))
 						{
-							'Error en línea '.($lineaAct+$j+1).': Valor del parámetro '.($k+1).' debe ser numérico';
+							return 'Error en línea '.($lineaAct+$j+1).': Valor del parámetro '.($k+1).' debe ser numérico';
 						}
 					}
 
@@ -169,7 +169,7 @@ class punto1Controller extends Controller
 				}
 				else
 				{
-					return 'Error en línea '.($lineaAct+$j+1).': Se esperan 6 valores numéricos despues de "UPDATE"';
+					return 'Error en línea '.($lineaAct+$j+1).': Se esperan 4 valores numéricos despues de "UPDATE"';
 				}
 			}
 			else 

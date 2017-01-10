@@ -129,13 +129,9 @@ class Matrix
     	{
     		return 'Los indices de la celda no pueden ser superiores a las dimensiones';
     	}
-    	if($valor>pow(10,9))
+    	if($valor>pow(10,9)||$valor<pow(-10,9))
     	{
-    		return 'nuevo valor no permitido, es mayor a 10^9';
-    	}
-    	if($valor<pow(-10,9))
-    	{
-    		return 'nuevo valor no permitido, es menor a 10^9';
+    		return 'El nuevo valor debe ser mayor a -10^9 y menor a 10^9';
     	}
     	
     	$this->matriz[$x][$y][$z] = $valor;
