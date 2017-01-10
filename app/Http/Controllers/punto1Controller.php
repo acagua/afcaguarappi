@@ -174,7 +174,7 @@ class punto1Controller extends Controller
 			}
 			else 
 			{
-				return 'Error en línea '.($lineaAct+$j+1).': Debe iniciar con "QUERY" o "UPDATE';
+				return 'Error en línea '.($lineaAct+$j+1).': Debe iniciar con "QUERY" o "UPDATE"';
 			}
 		}
 		return $resultado;

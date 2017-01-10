@@ -14,6 +14,6 @@ class ExampleTest extends TestCase
     public function testBasicExample()
     {
         $this->visit('/')
-             ->see('Andrés Cagua');// TESTEAR LA CLASE MATRIZ!!!!!!!
+             ->see('Andrés Cagua');
     }
 }
