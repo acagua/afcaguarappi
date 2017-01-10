@@ -88,20 +88,32 @@
                 </div>
             </div>
         </div>
-                <ol>
-                    <li> Las malas prácticas de programación que en su criterio son evidenciadas en el código. </li>
-                        <p>Las malas prácticas indentificadas son: </p>
-                        <ul>
-                            <li> Mala practica 1 </li>
-                        </ul>
-                        <br>
-                    <li> Cómo su refactorización supera las malas prácticas de programación. </li>
-
-                    <p>La refactorización soluciona las malas prácticas de este modo:</p>
+            <ul>
+                <li> <a href="https://drive.google.com/open?id=0B05Lb5MRRtu_WXhTT1J2ZldPSTQ" target="_blank"> Código Inicial </a> </li>
+                <li> <a href="https://drive.google.com/open?id=0B05Lb5MRRtu_ZEs0Z0VzNDhfNmM" target="_blank"> Código Refactorizado </a> </li>
+            </ul>
+            <ol>
+                <li> Las malas prácticas de programación que en su criterio son evidenciadas en el código. </li>
+                    <p>Las malas prácticas indentificadas son: </p>
                     <ul>
-                        <li> Solución 1 </li>
+                        <li> Falta de documentación para el método </li>
+                        <li> Bloques de código sin utilizar (comentados) </li>
+                        <li> Comentarios sin relevancia </li>
+                        <li> Código duplicado </li>
+                        <li> Anidamiento innecesario </li>
                     </ul>
+                    <br>
+                <li> Cómo su refactorización supera las malas prácticas de programación. </li>
 
-                </ol>
+                <p>La refactorización soluciona las malas prácticas de este modo:</p>
+                <ul>
+                    <li> Se adiciona una descripción de la funcionalidad del método que contextualiza al desarrollador </li>
+                    <li> Se eliminan los comentarios innecesarios para mayor claridad </li>
+                    <li> Se hace una reducción sustancial en los anidamientos para evitar la duplicidad de código y 
+                    andiamientos innecesarios. Esto da mayor legibilidad y comprensión al código </li>
+                    <li> Adición de variable para manejar el id del conductor para evitar hacer el llamado a las variables POST cada vez que sea necesario. </li>
+                </ul>
+
+            </ol>
     </body>
 </html>
