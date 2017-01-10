@@ -49,10 +49,11 @@ class punto1Controller extends Controller
 		for($i=0;$i<$testcases;$i++)
 		{
 			$lineaAct++;
-
+			
 			if(count($lineas)<$lineaAct)
-			{
-				return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($posTestcase+1).': Inexistente');
+			{	
+
+				return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.(count($lineas)+1).': Inexistente');
 			}
 			
 			$testcaseData = explode(" ",trim($lineas[$posTestcase]));
@@ -79,85 +80,103 @@ class punto1Controller extends Controller
 				return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($posTestcase+1).': El número de operaciones debe estar entre 1 y 1000');
 			}
 
-			//Creación de la matriz en 0 con las dimensiones de entrada
-			$matriz = new Matrix;
-			$matriz->createMatriz($dimensiones);
-
-			//Posición de inicio de las operaciones del testcase
-			$baseOps = $lineaAct;
+			//Ejecución de operaciones del testcase
+			$testCaseResult = $this->execTestcase($dimensiones, $ops, $lineaAct, array_slice($lineas,$lineaAct,$ops));
 			
-			if($ops+$baseOps>count($lineas))
-			{
-				return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($ops+$baseOps).': inexistente');
+			if(strpos($testCaseResult, "Error") !== false)
+			{	
+				return \Redirect::route('punto1')->with('salida',$entrada)->withErrors($testCaseResult);
 			}
 
-			for($j=$baseOps;$j<$ops+$baseOps;$j++)
-			{
-				$lineaAct++;
-
-				$accion = explode(" ",trim($lineas[$j]));
-
-				//Validación del tipo de Operación
-				if($accion[0]=="QUERY")
-				{
-					if(count($accion)==7)
-					{
-						for($k=1;$k<count($accion);$k++)
-						{
-							if(!is_numeric($accion[$k]))
-							{
-								return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($j+1).': Valor del parámetro '.($k+1).' debe ser numérico');
-							}
-						}
-
-						$query = $matriz->getQuery($accion[1],$accion[2],$accion[3],$accion[4],$accion[5],$accion[6]);
-						if(!is_numeric($query))
-						{
-							return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($j+1).': '.$query);
-						}
-						else
-						{
-							$resultado.=$query."\n"; 
-						}
-					}
-					else
-					{
-						return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($j+1).': Se esperan 6 valores numéricos despues de "QUERY"');
-					}
-				}
-				elseif($accion[0]=="UPDATE")
-				{
-					if(count($accion)==5)
-					{
-						for($k=1;$k<count($accion);$k++)
-						{
-							if(!is_numeric($accion[$k]))
-							{
-								return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($j+1).': Valor del parámetro '.($k+1).' debe ser numérico');
-							}
-						}
-
-						$update = $matriz->updateCelda($accion[1],$accion[2],$accion[3],$accion[4]);
-						if(!is_numeric($update))
-						{
-							return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($j+1).': '.$update);
-						}
-
-					}
-					else
-					{
-						return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($j+1).': Se esperan 6 valores numéricos despues de "UPDATE"');
-					}
-				}
-				else 
-				{
-					return \Redirect::route('punto1')->with('salida',$entrada)->withErrors('Error en línea '.($j+1).': Debe iniciar con "QUERY" o "UPDATE');
-				}
-
-			}
+			$resultado .= $testCaseResult;
+			$lineaAct += $ops;
 			$posTestcase = $lineaAct;
 		}
-		$arreglo = explode("\n",$resultado);
+
+		$arreglo = explode("\n", $resultado);
     	return \Redirect::route('punto1')->with(['salida'=>$entrada, 'respuesta' => $arreglo]);
+    }
+
+    /**
+     * Procesa las operaciones y las aplica sobre la matriz
+     *
+     * @param ($dimensiones) Valor que recibe para la construcción de la matriz (en sus dimensiones)
+     * @param ($ops) Número de operaciones que se ejecutará sobre la matriz
+     * @param ($lineaAct) Línea base para los errores
+     * @param ($lineas) Arreglo con las operaciones para el testcase
+     * @return view
+     */
+    public function execTestcase($dimensiones, $ops, $lineaAct, $lineas)
+    {
+		//Creación de la matriz en 0 con las dimensiones de entrada
+		$matriz = new Matrix;
+		$matriz->createMatriz($dimensiones);
+		$resultado = "";
+
+		if($ops>count($lineas))
+		{
+			return 'Error en línea '.($lineaAct).': Número de operaciones no coincide';
+		}
+		for($j=0;$j<$ops;$j++)
+		{
+
+			$accion = explode(" ",trim($lineas[$j]));
+
+			//Validación del tipo de Operación
+			if($accion[0]=="QUERY")
+			{
+				if(count($accion)==7)
+				{
+					for($k=1;$k<count($accion);$k++)
+					{
+						if(!is_numeric($accion[$k]))
+						{
+							return 'Error en línea '.($lineaAct+$j+1).': Valor del parámetro '.($k+1).' debe ser numérico';
+						}
+					}
+
+					$query = $matriz->getQuery($accion[1],$accion[2],$accion[3],$accion[4],$accion[5],$accion[6]);
+					
+					if(!is_numeric($query))
+					{
+						return 'Error en línea '.($lineaAct+$j+1).': '.$query;
+					}
+					$resultado .= $query."\n"; 
+				}
+				else
+				{
+					return 'Error en línea '.($lineaAct+$j+1).': Se esperan 6 valores numéricos despues de "QUERY"';
+				}
+			}
+			elseif($accion[0]=="UPDATE")
+			{
+				if(count($accion)==5)
+				{
+					for($k=1;$k<count($accion);$k++)
+					{
+						if(!is_numeric($accion[$k]))
+						{
+							'Error en línea '.($lineaAct+$j+1).': Valor del parámetro '.($k+1).' debe ser numérico';
+						}
+					}
+
+					$update = $matriz->updateCelda($accion[1],$accion[2],$accion[3],$accion[4]);
+					if(!is_numeric($update))
+					{
+						return 'Error en línea '.($lineaAct+$j+1).': '.$update;
+					}
+
+				}
+				else
+				{
+					return 'Error en línea '.($lineaAct+$j+1).': Se esperan 6 valores numéricos despues de "UPDATE"';
+				}
+			}
+			else 
+			{
+				return 'Error en línea '.($lineaAct+$j+1).': Debe iniciar con "QUERY" o "UPDATE';
+			}
+		}
+		return $resultado;
     }
 }
