@@ -103,7 +103,7 @@
                     <p>A partir del Framework Laravel, la aplicación se separó básicamente en vistas y controladores. Se adicionó una clase externa para separar lo que respecta a las funciones de la matriz. </p>
                     <p>Dentro de las vistas, para esta prueba (no solo el primer punto) se crearon las páginas con las que interactúa el usuario para cada uno de los puntos (punto1.blade.php, punto2.blade.php, punto3.blade.php y respuestas1.blade.php) </p>
                     <p>Por el lado de los controladores, dado que solo se requirió para el primer punto, se creo un controlador (punto1Controller.php) que se encarga de desplegar la vista inicial al usuario, recibir y procesar la entrada del mismo y desplegar el resultado y otro adicional (Punto1FormRequest.php) que valida el formulario del usuario. </p>
-                    <p>Por último, la clase externa creada (Matrix.php) es una clase cuya función es hacer los procesos que respectan a la matriz, es decir la creación de la matriz, la actualización de celdas y la suma de los valores dentro de un rango. </p>
+                    <p>Por último, se crearon dos clases externas. La primera clase (Matrix.php) es una clase cuya función es hacer los procesos que respectan a la matriz, es decir la creación de la matriz, la actualización de celdas y la suma de los valores dentro de un rango. La segunda clase (Punto1ControllerTest.php) contiene las pruebas unitarias para validar el correcto funcionamiento del controlador. </p>
 
                 </ol>
     </body>
