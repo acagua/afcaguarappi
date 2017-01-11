@@ -78,9 +78,9 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{ url('/punto1') }}">Punto 1</a>
-                    <a href="{{ url('/punto2') }}">Punto 2</a>
-                    <a href="{{ url('/punto3') }}">Punto 3</a>
+                    <a href="{{ url('/punto1') }}">Coding Challenge</a>
+                    <a href="{{ url('/punto2') }}">Code Refactoring</a>
+                    <a href="{{ url('/punto3') }}">Preguntas</a>
                 </div>
             </div>
         </div>
